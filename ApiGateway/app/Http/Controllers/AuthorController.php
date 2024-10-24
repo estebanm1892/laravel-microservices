@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthorService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -10,6 +11,19 @@ class AuthorController extends BaseController
 {
 
     use ApiResponser;
+
+    /**
+     * The service to consume the authors microservice
+     * @var AuthorService
+     */
+
+    public $authorService;
+
+    public function __construct(AuthorService $authorService)
+    {
+        $this->authorService = $authorService;
+    }
+
     /**
      * Return list of authors
      *
