@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\AuthorService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthorController extends BaseController
@@ -30,7 +31,10 @@ class AuthorController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function index() {}
+    public function index()
+    {
+        return $this->successResponse($this->authorService->obtainAuthors());
+    }
 
     /**
      * Create an instance of Author
@@ -39,7 +43,10 @@ class AuthorController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function store(Request $request) {}
+    public function store(Request $request)
+    {
+        return $this->successResponse($this->authorService->createAuthor($request->all(), Response::HTTP_CREATED));
+    }
 
     /**
      * Obtain and show an author
@@ -48,7 +55,10 @@ class AuthorController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function show($author) {}
+    public function show($author)
+    {
+        return $this->successResponse($this->authorService->obtainAuthor($author));
+    }
 
     /**
      * Update an author
@@ -58,7 +68,10 @@ class AuthorController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function update(Request $request, $author) {}
+    public function update(Request $request, $author)
+    {
+        return $this->successResponse($this->authorService->editAuthor($request->all(), $author));
+    }
 
     /**
      * Remove an author
@@ -67,5 +80,8 @@ class AuthorController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function destroy($author) {}
+    public function destroy($author)
+    {
+        return $this->successResponse($this->authorService->deleteAuthor($author));
+    }
 }
